@@ -5,11 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="auto.css">
     <title>Automatic control</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
 </head>
     <body>
+        <div id="logs_status">
+            <p></p>
+        </div>
         <div class="nav-bar">
             <div class="logo">
                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -19,11 +24,24 @@
                 </svg>
                 <span>ATS</span>
             </div>
-            <div class="list">
+            <div id="list" class="list">
                 <li style="cursor: pointer;"><a href="index.html">Home</a></li>
                 <li style="cursor: pointer;"><a href="manual.html">Manual control</a></li>
                 <li style="cursor: pointer;"><a style="color: #007BFF;" href="auto.html">Automatic control</a></li>
                 <li style="cursor: pointer;"><a href="live.html">Live Stream</a></li>
+                <li style="cursor: pointer;"><a href="test.html">Testing-methods</a></li>
+                <li style="cursor: pointer;"><a href="register.html">Register</a></li>
+                <li style="cursor: pointer;"><a href="login.html">Login</a></li>
+            </div>
+            <button id="sidebar-btn">
+                <i id="xbar" class="fa-solid fa-bars"></i>
+                <i id="xmark" class="fa-regular fa-circle-xmark"></i>
+            </button>
+            <div class="sidebar">
+                <li style="cursor: pointer;"><a href="index.html">Home</a></li>
+                <li style="cursor: pointer;"><a href="manual.html">Manual control</a></li>
+                <li style="cursor: pointer;"><a style="color: #007BFF;" href="auto.html">Automatic control</a></li>                <li style="cursor: pointer;"><a href="live.html">Live Stream</a></li>
+                <li style="cursor: pointer;"><a href="test.html">Testing-methods</a></li>
                 <li style="cursor: pointer;"><a href="register.html">Register</a></li>
                 <li style="cursor: pointer;"><a href="login.html">Login</a></li>
             </div>
@@ -144,5 +162,97 @@
                 </div>
             </div>
         </div>
+
+
+<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>    
+<script>
+            let sidebarbtn = document.getElementById("sidebar-btn");
+            let sidebar = document.querySelector(".sidebar");
+            let xbar = document.getElementById("xbar");
+            let xmark = document.getElementById("xmark");
+             
+            
+            xmark.classList.remove("fa-circle-xmark");
+            
+            
+            sidebarbtn.onclick = function (){
+              sidebar.classList.toggle("side-move");
+              sidebarbtn.classList.toggle("btn-move");
+              xmark.classList.toggle("fa-circle-xmark");
+              xbar.classList.toggle("fa-bars");
+              sidebarbtn.style.border="0px";
+            };
+    logs_status=document.getElementById("logs_status");
+     const firebaseConfig = {
+      apiKey: "AIzaSyCt3PpT9MV8TBlsgDmjvUngq-ZF1lNYQ2c",
+      authDomain: "rpi-car-track.firebaseapp.com",
+      databaseURL: "https://rpi-car-track-default-rtdb.firebaseio.com",
+      projectId: "rpi-car-track",
+      storageBucket: "rpi-car-track.firebasestorage.app",
+      messagingSenderId: "603017187064",
+      appId: "1:603017187064:web:c8da4c7a71d9745fe8b50d",
+      measurementId: "G-GEM4R145LE"
+    };
+  
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // Map Initialization
+    var map = L.map('more').setView([0, 0], 15); // Default center (can be updated later)
+
+    // OpenStreetMap Layer
+    var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: ''
+    });
+    osm.addTo(map);
+
+    // Marker and Circle Variables
+    var marker;
+
+    // Function to update map with new coordinates
+    function updateMap(latitude, longitude, accuracy = 50) {
+        if (marker) {
+            map.removeLayer(marker);
+        }
+
+        if (circle) {
+            map.removeLayer(circle);
+        }
+
+        // Add Marker and Circle
+        marker = L.marker([latitude, longitude]).addTo(map);
+        circle = L.circle([latitude, longitude], { radius: accuracy }).addTo(map);
+
+        // Fit bounds around the marker and circle
+        var featureGroup = L.featureGroup([marker, circle]).addTo(map);
+        map.fitBounds(featureGroup.getBounds());
+
+        //console.log(`Updated Map: Latitude: ${latitude}, Longitude: ${longitude}`);
+    }
+                                           ///////logs-Status 
+                                           const status_s = firebase.database().ref('log');
+    status_s.on('value', (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+            const { status, text } = data;
+
+            logs_status.innerText = text;
+            if(status=="info"){
+                logs_status.style.color = "#000";
+                logs_status.style.backgroundColor = "#6EACDA";
+            }
+            if(status=="warning"){
+                logs_status.style.backgroundColor = "#FFC107";
+                logs_status.style.color = "#000";
+            }
+            if(status=="error"){
+                logs_status.style.backgroundColor = "#DC3545";
+                logs_status.style.color = "#fff";
+            }
+        }
+    });
+</script>
+            </script>
     </body>
 </html>

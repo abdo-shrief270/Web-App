@@ -3,6 +3,19 @@
     padding: 0;
     margin: 0;
 }
+body{
+    overflow-x:hidden;
+}
+#logs_status{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 12px;  
+    width: 100%;
+}
 .nav-bar{
     list-style: none;
     padding: 12px 64px 12px 64px;
@@ -33,6 +46,65 @@
     color: black;
 }
 
+
+#sidebar-btn{
+    display: none;
+    border: none;
+}
+.btn-move{
+    transform: translate(-222px,0);
+    transition: 0.5s;
+}
+.sidebar{
+    background-color:#fff ;
+    border: 1px solid #007BFF;
+    width: 250px;
+    height: 135vh;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+    transform: translate(255px,0);
+    transition: 0.5s;
+    display: none;
+}
+
+#xmark{
+ color: #fff;
+ font-size: 30px;
+ background-color: red;
+ clip-path: circle(46%);
+}
+.side-move{
+transform: translate(0,0);
+}
+.sidebar a{
+    font-weight: 500;
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+}
+.sidebar li{
+    margin-top: 45px;
+    transition: 0.5s;
+}
+.sidebar li:hover{
+    transform: translateX(-20px);
+    transition: 0.5s;
+    color: #007BFF;
+}
+.sidebar a:hover{
+    color: #007BFF;
+}
+
+.noborder{
+   border: 0px;
+}
 
 
 .container{
@@ -115,6 +187,7 @@
     top: 50%;
     right:35%;
     cursor: pointer;   
+    z-index: 400;
 }
 .hide{
     display: none;
@@ -195,8 +268,14 @@
     flex-direction: column;
     gap: 8px;
 }
-  
+.new_batt{
+    display:flex;
+    gap:6px;
 
+}
+.hide{
+    display: none;
+}
 
 
 @media (max-width:600px) {
@@ -319,6 +398,9 @@
         padding: 0px 20px 0px 20px;
         flex-direction: row;
         justify-content: space-between;
+    } 
+    body{
+        overflow-x: hidden;
     }
     .logo{
         color: #007BFF;
@@ -328,8 +410,28 @@
         width: 45px;
     }
     .list{
-        font-size: 14px;
-        gap: 20px;
+        display: none;
+    }
+    #sidebar-btn{
+        background-color: #fff;
+        color: #007BFF;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 35px;
+        height: 35px;
+        font-size: 25px;
+        border-radius: 5px;
+        position: relative;
+        right: 10px;
+        transition: 0.5s;
+        border: none;
+
+    }
+    .sidebar{
+        display:flex;
+        z-index: 1500;
+
     }
     .container{
         display: flex;
@@ -342,6 +444,7 @@
     .con{
         flex-direction: column;
         display: flex;
+        align-items: center;
         justify-content: center;
         gap: 64px;
     }

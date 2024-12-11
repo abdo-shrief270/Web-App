@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 </head>
 <body>
+    <div id="logs_status">
+        <p></p>
+    </div>
     <div class="nav-bar">
         <div class="logo">
             <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -20,11 +24,25 @@
             </svg>
             <span>ATS</span>
         </div>
-        <div class="list">
+        <div class="list" id="list">
             <li style="color: #007BFF;cursor: pointer;">Home</li>
             <li style="cursor: pointer;"><a href="manual.html">Manual control</a></li>
             <li style="cursor: pointer;"><a href="auto.html">Automatic control</a></li>
             <li style="cursor: pointer;"><a href="live.html">Live Stream</a></li>
+            <li style="cursor: pointer;"><a href="test.html">Testing-methods</a></li>
+            <li style="cursor: pointer;"><a href="register.html">Register</a></li>
+            <li style="cursor: pointer;"><a href="login.html">Login</a></li>
+        </div>
+        <button id="sidebar-btn">
+            <i id="xbar" class="fa-solid fa-bars"></i>
+            <i id="xmark" class="fa-regular fa-circle-xmark"></i>
+        </button>
+        <div class="sidebar">
+            <li style="color: #007BFF;cursor: pointer;">Home</li>
+            <li style="cursor: pointer;"><a href="manual.html">Manual control</a></li>
+            <li style="cursor: pointer;"><a href="auto.html">Automatic control</a></li>
+            <li style="cursor: pointer;"><a href="live.html">Live Stream</a></li>
+            <li style="cursor: pointer;"><a href="test.html">Testing-methods</a></li>
             <li style="cursor: pointer;"><a href="register.html">Register</a></li>
             <li style="cursor: pointer;"><a href="login.html">Login</a></li>
         </div>
@@ -57,9 +75,7 @@
                 <p class="word3">Status</p>
                 <div class="con2">
                     <div class="leftside">
-                       
                             <p class="move"></p>
-                        
                         <div class="kalam">
                             <div class="a">
                             <p>Vehicle status</p>
@@ -67,27 +83,30 @@
                           </div>
                             <div class="a">
                             <p>Person inside</p>
-                          <p style="color:#28A745;">Allowed</p>
+                          <p id="allow" style="color:#28A745;"></p> 
                          </div>
                             <div class="a">
                             <p>Vehicle speed</p>
-                            <p style="color:#28A745;">60km/h</p>
+                            <p id="vspeed"></p>
                           </div>
                         </div>
                      </div>
                      
                     <div class="rightside">
                         <div class="car-status">
-                            <p>Allowe person inside</p>
+                            <p></p>
                         </div>
                         <div class="cam-battery">
                             <div class="space">
                                 <p style="color: #767676;">Battery percentage</p>
-                                <p style="color: #007BFF;font-size: 16px;font-weight: 700;">20% (Charging...)</p>
+                                <div class="new_batt">
+                                <p id="batt_percentage"></p>
+                                <p id="batt_charging"></p>
+                            </div>
                             </div>
                             <div class="space">
-                                <p style="color: #767676;">Camera</p>
-                                <p style="color: #28A745;font-size: 16px;font-weight: 700;">Operating normally</p>
+                                <p  style="color: #767676;">Camera</p>
+                                <p id="wecam"></p>
                             </div>
                         </div>
                     </div>
@@ -102,6 +121,13 @@
     <script>
         statusParag = document.getElementsByClassName('move')[0];
         movingFlag = document.getElementById('movingFlag');
+        allow= document.getElementById("allow");
+        carstatus = document.querySelector(".car-status");
+        batt_percentage = document.getElementById("batt_percentage");
+        batt_charging = document.getElementById("batt_charging");
+        vspeed_p=document.getElementById("vspeed");
+        wecam=document.getElementById("wecam");
+        logs_status=document.getElementById("logs_status");
         const firebaseConfig = {
           apiKey: "AIzaSyCt3PpT9MV8TBlsgDmjvUngq-ZF1lNYQ2c",
           authDomain: "rpi-car-track.firebaseapp.com",
@@ -121,7 +147,7 @@
 
         // OpenStreetMap Layer
         var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://github.com/abdo-shrief270">Abdelrahman Shrief</a> contributor'
+            attribution: ''
         });
         osm.addTo(map);
 
@@ -169,18 +195,106 @@
                 statusParag.style.color = "#AA2845";
                 statusParag.style.backgroundColor  = "#7A28351A";
                 statusParag.innerText = "Vehicle is moving";
-
                 movingFlag.style.color = "#A72845";
                 movingFlag.innerText = "Moving";
             } else {
                 statusParag.style.color = "#28AA45";
                 statusParag.style.backgroundColor  = "#28A7451A";
                 statusParag.innerText = "Vehicle is not moving";
-
                 movingFlag.style.color = "#28A745";
                 movingFlag.innerText = "Not Moving";
             }
         });
+                        /////person inside and allowed
+        const personallowed = firebase.database().ref('person_allowed');
+        personallowed.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                allow.style.color = "#28AA45";
+                allow.innerText = "Allowed";
+                carstatus.style.color = "#28AA45";
+                carstatus.style.backgroundColor  = "#28A7451A";
+                carstatus.innerText = "Person is Allowed";
+            } else {
+                allow.style.color = "#A72845";
+                allow.innerText = "Not Allowed";
+                carstatus.style.color = "#A72845";
+                carstatus.style.backgroundColor  = "#7A28351A";
+                carstatus.innerText = "Person is Not Allowed";
+            }
+        });
+                            /////battery Percentage
+const batterypercentage = firebase.database().ref('batt_per');
+        batterypercentage.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data <= 30){
+                batt_percentage.innerText = data + "%";
+                batt_percentage.style.color = "#A72845";
+            }
+            else{ 
+                batt_percentage.innerText = data + "%";
+                batt_percentage.style.color = "#007BFF";
+            }
+            
+            });
+                                /////battery Charging
+ const batteryCharging = firebase.database().ref('batt_chr');
+        batteryCharging.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                batt_charging.innerText ="Charging";
+                batt_charging.style.color = "#007BFF";
+            }
+        });
+                               ///////Vehicle Speed
+        const vspeed = firebase.database().ref('v_speed');
+        vspeed.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data <= 80){
+                vspeed_p.innerText = data + " Km/h";
+                vspeed_p.style.color = "#28AA45";
+            }
+            else{ 
+                vspeed_p.innerText = data + " Km/h";
+                vspeed_p.style.color = "#A72845";
+            } 
+            });
+                               ///////Camera Status
+        const cameraopr = firebase.database().ref('camera_opr');
+        cameraopr.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                wecam.style.color = "#28AA45";
+                wecam.innerText = "Operating";
+                
+            } else {
+                wecam.style.color = "#AA2845";
+                wecam.innerText ="Not Operating";          
+            }
+        });
+                                       ///////logs-Status 
+        const status_s = firebase.database().ref('log');
+        status_s.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                const { status, text } = data;
+
+                logs_status.innerText = text;
+                if(status=="info"){
+                    logs_status.style.color = "#000";
+                    logs_status.style.backgroundColor = "#6EACDA";
+                }
+                if(status=="warning"){
+                    logs_status.style.backgroundColor = "#FFC107";
+                    logs_status.style.color = "#000";
+                }
+                if(status=="error"){
+                    logs_status.style.backgroundColor = "#DC3545";
+                    logs_status.style.color = "#fff";
+                }
+            }
+        });
+
       </script>
 
 </body>
