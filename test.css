@@ -230,14 +230,20 @@ transform: translate(0,0);
 }
 
 .right{
-    margin-top: 40px;
     display: flex;
     flex-direction: column;
     gap: 30px;
 }
 .status{
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-size: 30px;
+    margin: 0;
+    font-weight: 700;
+
 }
 .car-online{
     background-color: rgba(40, 167, 69, 0.1);
@@ -250,18 +256,7 @@ transform: translate(0,0);
     font-weight: bold;
     border-radius: 10px;
     padding: 5px;
-}
-.last-active{
-    background: #DC35451A;
-    color: #DC3545;
-    border-radius: 10px;
-    width: 400px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    padding: 5px;
+    width: 100%;
 }
 .con{
     display:flex;
@@ -455,15 +450,15 @@ transform: translate(0,0);
         display: flex;
         justify-content:center;
         align-items: center;
-        gap: 95px;
+        gap: 6px;
+        flex-direction: column;
+        
+     
     }
     .car-online{
-        width: 250px;
+        font-size: 20px;
         height: 40px;
-    }
-    .last-active{
-        width: 250px;
-        height: 40px;
+        width:600px;
     }
     .con{
         display:flex;
@@ -495,7 +490,13 @@ transform: translate(0,0);
 }
 .arduino input,.rpi input{
     width: 230px;
+   
+
 }
+.send{
+    margin-bottom: 6px;
+}
+
 .location-data{
     gap: 15px;
 
@@ -560,7 +561,7 @@ transform: translate(0,0);
        }
        .sidebar{
            display:flex;
-           height: 195vh;
+           height: 210vh;
            width: 200px;
        }
        .container{
@@ -614,19 +615,11 @@ transform: translate(0,0);
        }
        .status{
            display: flex;
+           flex-direction: column;
            justify-content:center;
            align-items: center;
            gap: 6px;
-       }
-       .car-online{
-           width: 200px;
-           height: 40px;
-           font-size: 15px;
-       }
-       .last-active{
-           width: 200px;
-           height: 40px;
-           font-size: 15px;
+           font-size: 20px;
        }
        .con{
            display:flex;
@@ -667,9 +660,8 @@ transform: translate(0,0);
        width: 420px;
    }
    .location-data{
-    display: flex;
-
-       gap: 15px;
+        display: flex;
+        gap: 15px;
    
    }
    .co-ordinates{

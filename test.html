@@ -78,12 +78,9 @@
         </div>
         <div class="right">
             <div class="status">
-                <div id="carro" class="car-online">
-                    <p ></p>
-                </div>
-                <div id="last-active" class="last-active">
-                    <p></p>
-                </div>
+                <p> Status of the car </p>
+                <p id="carro" class="car-online">
+                </p>
             </div>
             <div class="con">
                 <div class="square">
@@ -101,7 +98,7 @@
                         </svg>
                         <p>Angle</p> 
                     </div>
-                    <div class="down">90°</div>
+                    <div id="angle" class="down"></div>
                 </div>
                 <div class="square">
                     <div class="up">
@@ -118,7 +115,7 @@
                         </svg>
                         <p>Distance</p>
                     </div>
-                    <div class="down">0 cm</div>
+                    <div id="distance"  class="down"></div>
                 </div>
                 <div class="square">
                     <div class="up">
@@ -131,13 +128,13 @@
                         </svg>  
                         <p class="ss">Speed</p> 
                     </div>
-                    <div class="down">0</div>
+                    <div id="speedoo" class="down"></div>
                 </div>
             </div>
             <div class="hardware">
                 <div class="arduino">
                     <p>Arduino Echo</p>
-                    <input type="text" disabled>
+                    <input id="arduino_echo" type="text" disabled>
                 </div>
                 <div class="rpi">
                     <p>Rpi Command</p>
@@ -207,61 +204,125 @@
             }
         });
         ////// left ultra sonic read
-        const left_ultra = firebase.database().ref('camera_opr');
+        const left_ultra = firebase.database().ref('us_1');
         left_ultra.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                read1.innerText = data;  
+                read1.innerText = Math.floor(data);  
             } 
         });
         ////// front ultra sonic read
-        const front_ultra = firebase.database().ref('camera_opr');
+        const front_ultra = firebase.database().ref('us_2');
         front_ultra.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                read2.innerText = data;  
+                read2.innerText = Math.floor(data);  
             } 
         });
         ////// right ultra sonic read
-        const right_ultra = firebase.database().ref('camera_opr');
+        const right_ultra = firebase.database().ref('us_3');
         right_ultra.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                read3.innerText = data;  
+                read3.innerText = Math.floor(data);  
             } 
         });
          ////// car is online
-         const car_online = firebase.database().ref('camera_opr');
-        car_online.on('value', (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-                carro.p.innerText ="Car is Online" ; 
-                carro.style.backgroundColor = "rgba(40, 167, 69, 0.1);";
-                carro.style.color = "rgb(51, 186, 51);";
+        const car_online = firebase.database().ref('last_online');
 
-            } 
-            else{
-                carro.p.innerText ="Car is Not Online" ;  
+        // Function to update the UI based on the value
+        function updateCarStatus(data) {
+            const d = new Date();
+            let time = d.getTime();
+            console.log(time / 1000 - data);
+            let time_diff =Math.floor( time / 1000 - data);
+
+            if (time_diff < 2) {
+                carro.innerText = "Car is Online";
+                carro.style.backgroundColor = "rgba(40, 167, 69, 0.1)";
+                carro.style.color = "#28AA45";
+            } else {
+
+                carro.innerText = "Last Active from " + formatTimeAgo(time_diff);
                 carro.style.backgroundColor = "#DC35451A";
                 carro.style.color = "#DC3545";
+                logs_status.style.backgroundColor = "#DC3545";
+                logs_status.style.color = "#fff";
+                logs_status.innerText="Car is offline";
             }
-        });
-        /////// Last active
-        const lastactive = firebase.database().ref('camera_opr');
-        lastactive.on('value', (snapshot) => {
+        }
+
+        // Real-time listener for changes
+        car_online.on('value', (snapshot) => {
             const data = snapshot.val();
-            if (data) {
-                last_active.p.innerText =data; 
-                last_active.style.backgroundColor = "rgba(40, 167, 69, 0.1);";
-                last_active.style.color = "rgb(51, 186, 51);";
-            } 
-            else{
-                last_active.p.innerText =data ;  
-                last_active.style.backgroundColor = "#DC35451A";
-                last_active.style.color = "#DC3545";
-            }
+            updateCarStatus(data);
         });
 
+        // Periodic check to ensure UI updates even without database changes
+        setInterval(() => {
+            car_online.once('value').then((snapshot) => {
+                const data = snapshot.val();
+                updateCarStatus(data);
+            });
+        }, 500);
+        function formatTimeAgo(seconds) {
+            if (seconds < 60) {
+                return seconds + " second" + (seconds === 1 ? "" : "s") + " ago";
+            } else if (seconds < 3600) {
+                const minutes = Math.floor(seconds / 60);
+                return minutes + " minute" + (minutes === 1 ? "" : "s") + " ago";
+            } else if (seconds < 86400) {
+                const hours = Math.floor(seconds / 3600);
+                return hours + " hour" + (hours === 1 ? "" : "s") + " ago";
+            } else {
+                const days = Math.floor(seconds / 86400);
+                return days + " day" + (days === 1 ? "" : "s") +" ago";
+            }
+        }
+        ////// angle
+        const angle_o = firebase.database().ref('angle');
+        angle_o.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data==0) {
+              
+                angle.innerText = 0;
+              
+            } 
+            else{
+                angle.innerText = Math.floor(data);  
+            }
+        });
+        ///////////distance
+        const dist = firebase.database().ref('distance');
+        dist.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data==0) {
+                distance.innerText =0;   
+            } 
+            else{
+                distance.innerText = Math.floor(data);  
+            }
+        });
+        ////////////speed
+        const spee = firebase.database().ref('speed');
+        spee.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data==0) {
+                speedoo.innerText = 0;  
+            } 
+            else{
+                speedoo.innerText = Math.floor(data);  
+            }
+        });
+        ////////////////Arduino Echo
+        const arduino = firebase.database().ref('arduino_echo');
+        arduino.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                arduino_echo.innerText = data;  
+            } 
+            
+        });
     </script>
 </body>
 </html>
