@@ -272,22 +272,46 @@ const batterypercentage = firebase.database().ref('batt_per');
             }
         });
                                        ///////logs-Status 
+        // const status_s = firebase.database().ref('log');
+        // status_s.on('value', (snapshot) => {
+        //     const data = snapshot.val();
+        //     if (data) {
+        //         const { status, text } = data;
+
+        //         logs_status.innerText = text;
+        //         if(status=="info"){
+        //             logs_status.style.color = "#000";
+        //             logs_status.style.backgroundColor = "#6EACDA";
+        //         }
+        //         if(status=="warning"){
+        //             logs_status.style.backgroundColor = "#FFC107";
+        //             logs_status.style.color = "#000";
+        //         }
+        //         if(status=="error"){
+        //             logs_status.style.backgroundColor = "#DC3545";
+        //             logs_status.style.color = "#fff";
+        //         }
+        //     }
+        // });
+        let stored_log_status="";
+        let stored_log_text="";
         const status_s = firebase.database().ref('log');
         status_s.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
                 const { status, text } = data;
-
+                stored_log_status = status;
+                stored_log_text = text;
                 logs_status.innerText = text;
                 if(status=="info"){
                     logs_status.style.color = "#000";
                     logs_status.style.backgroundColor = "#6EACDA";
                 }
-                if(status=="warning"){
+                else if(status=="warning"){
                     logs_status.style.backgroundColor = "#FFC107";
                     logs_status.style.color = "#000";
                 }
-                if(status=="error"){
+                else if(status=="error"){
                     logs_status.style.backgroundColor = "#DC3545";
                     logs_status.style.color = "#fff";
                 }

@@ -112,60 +112,52 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // Map Initialization
-    var map = L.map('more').setView([0, 0], 15); // Default center (can be updated later)
-
-    // OpenStreetMap Layer
-    var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: ''
-    });
-    osm.addTo(map);
-
-    // Marker and Circle Variables
-    var marker;
-
-    // Function to update map with new coordinates
-    function updateMap(latitude, longitude, accuracy = 50) {
-        if (marker) {
-            map.removeLayer(marker);
-        }
-
-        if (circle) {
-            map.removeLayer(circle);
-        }
-
-        // Add Marker and Circle
-        marker = L.marker([latitude, longitude]).addTo(map);
-        circle = L.circle([latitude, longitude], { radius: accuracy }).addTo(map);
-
-        // Fit bounds around the marker and circle
-        var featureGroup = L.featureGroup([marker, circle]).addTo(map);
-        map.fitBounds(featureGroup.getBounds());
-
-        //console.log(`Updated Map: Latitude: ${latitude}, Longitude: ${longitude}`);
-    }
                                            ///////logs-Status 
-                                           const status_s = firebase.database().ref('log');
-    status_s.on('value', (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-            const { status, text } = data;
+    //                                        const status_s = firebase.database().ref('log');
+    // status_s.on('value', (snapshot) => {
+    //     const data = snapshot.val();
+    //     if (data) {
+    //         const { status, text } = data;
 
-            logs_status.innerText = text;
-            if(status=="info"){
-                logs_status.style.color = "#000";
-                logs_status.style.backgroundColor = "#6EACDA";
+    //         logs_status.innerText = text;
+    //         if(status=="info"){
+    //             logs_status.style.color = "#000";
+    //             logs_status.style.backgroundColor = "#6EACDA";
+    //         }
+    //         if(status=="warning"){
+    //             logs_status.style.backgroundColor = "#FFC107";
+    //             logs_status.style.color = "#000";
+    //         }
+    //         if(status=="error"){
+    //             logs_status.style.backgroundColor = "#DC3545";
+    //             logs_status.style.color = "#fff";
+    //         }
+    //     }
+    // });
+    let stored_log_status="";
+        let stored_log_text="";
+        const status_s = firebase.database().ref('log');
+        status_s.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                const { status, text } = data;
+                stored_log_status = status;
+                stored_log_text = text;
+                logs_status.innerText = text;
+                if(status=="info"){
+                    logs_status.style.color = "#000";
+                    logs_status.style.backgroundColor = "#6EACDA";
+                }
+                else if(status=="warning"){
+                    logs_status.style.backgroundColor = "#FFC107";
+                    logs_status.style.color = "#000";
+                }
+                else if(status=="error"){
+                    logs_status.style.backgroundColor = "#DC3545";
+                    logs_status.style.color = "#fff";
+                }
             }
-            if(status=="warning"){
-                logs_status.style.backgroundColor = "#FFC107";
-                logs_status.style.color = "#000";
-            }
-            if(status=="error"){
-                logs_status.style.backgroundColor = "#DC3545";
-                logs_status.style.color = "#fff";
-            }
-        }
-    });
+        });
 </script>
 </body>
 </html>
