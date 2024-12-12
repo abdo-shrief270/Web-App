@@ -389,170 +389,6 @@ transform: translate(0,0);
     display: none;
 }
 
-@media (min-width:601px) and (max-width:1024px){
-    
-    body{
-     overflow-x: hidden;
-    }
-    .nav-bar{
-        padding: 12px 32px 12px 32px;
-    }
-    .list{
-        display: none;
-    }
-    #sidebar-btn{
-        background-color: #fff;
-        color: #007BFF;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 35px;
-        height: 35px;
-        font-size: 25px;
-        border-radius: 5px;
-        position: relative;
-        right: 0px;
-        transition: 0.5s;
-    }
-    .sidebar{
-        display:flex;
-    }
-    .container{
-        padding: 32px;
-        display: flex;
-        flex-direction: column;
-        gap: 0px;
-    }
-    .left{
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-    .part2{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    #live{
-        width: 600px;
-    }
-    .ultra{
-        font-size: 25px;
-    }
-    .reads{
-        gap: 6px;
-    }
-    .left-ultra{
-        width: 200px;
-        font-size: 15px;
-    }
-    .left-ultra .from-back{
-        font-size: 15px;
-    }
-    .front-ultra{
-        width: 200px;
-        font-size: 15px;
-    }
-    .front-ultra .from-back{
-        font-size: 15px;
-    }
-    .right-ultra{
-        width: 200px;
-        font-size: 15px;
-    }
-    .right-ultra .from-back{
-        font-size: 15px;
-    }
-    .right{
-        margin-top: 30px;
-    }
-    .status{
-        display: flex;
-        justify-content:center;
-        align-items: center;
-        gap: 6px;
-        flex-direction: column;
-        
-     
-    }
-    .car-online{
-        font-size: 20px;
-        height: 40px;
-        width:600px;
-    }
-    .con{
-        display:flex;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-    }
-    .square{
-        width:180px;
-        height: 77px;
-    }
-    .up{
-        font-size: 15px;
-    }
-    .down{
-        font-size: 20px;
-    }
-    
-.hardware{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-}
-.arduino , .rpi{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-.arduino input,.rpi input{
-    width: 230px;
-   
-
-}
-.send{
-    margin-bottom: 6px;
-}
-
-.location-data{
-    gap: 15px;
-
-}
-.co-ordinates{
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    align-items: center;
-    font-size: 13px;
-}
-#latitude , #Longitude , #altitude{
-    width: 125px;
-}
-.axes{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 36px;
-}
-.x{
-    width: 125px;
-    position: relative;
-    left: 17px;
-}
-.y{
-    width: 125px;
-    position: relative;
-    left: 18px;
-
-}
-.z{
-    width: 125px;
-}
-
-}
 @media (max-width:600px){
     body{
         overflow-x: hidden;
@@ -717,3 +553,168 @@ transform: translate(0,0);
    }
    
 }
+@media (min-width:601px){
+    
+    body{
+     overflow-x: hidden;
+    }
+    .nav-bar{
+        padding: 12px 32px 12px 32px;
+    }
+    .list{
+        display: none;
+    }
+    #sidebar-btn{
+        background-color: #fff;
+        color: #007BFF;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 35px;
+        height: 35px;
+        font-size: 25px;
+        border-radius: 5px;
+        position: relative;
+        right: 0px;
+        transition: 0.5s;
+    }
+    .sidebar{
+        display:flex;
+    }
+    .container{
+        padding: 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 0px;
+    }
+    .left{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .part2{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #live{
+        width: 600px;
+    }
+    .ultra{
+        font-size: 25px;
+    }
+    .reads{
+        gap: 6px;
+    }
+    .left-ultra{
+        width: 200px;
+        font-size: 15px;
+    }
+    .left-ultra .from-back{
+        font-size: 15px;
+    }
+    .front-ultra{
+        width: 200px;
+        font-size: 15px;
+    }
+    .front-ultra .from-back{
+        font-size: 15px;
+    }
+    .right-ultra{
+        width: 200px;
+        font-size: 15px;
+    }
+    .right-ultra .from-back{
+        font-size: 15px;
+    }
+    .right{
+        margin-top: 30px;
+    }
+    .status{
+        display: flex;
+        justify-content:center;
+        align-items: center;
+        gap: 6px;
+        flex-direction: column;
+        
+     
+    }
+    .car-online{
+        font-size: 20px;
+        height: 40px;
+        width:600px;
+    }
+    .con{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+    }
+    .square{
+        width:180px;
+        height: 77px;
+    }
+    .up{
+        font-size: 15px;
+    }
+    .down{
+        font-size: 20px;
+    }
+    
+.hardware{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+.arduino , .rpi{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.arduino input,.rpi input{
+    width: 230px;
+   
+
+}
+.send{
+    margin-bottom: 6px;
+}
+
+.location-data{
+    gap: 15px;
+
+}
+.co-ordinates{
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    align-items: center;
+    font-size: 13px;
+}
+#latitude , #Longitude , #altitude{
+    width: 125px;
+}
+.axes{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+}
+.x{
+    width: 125px;
+    position: relative;
+    left: 17px;
+}
+.y{
+    width: 125px;
+    position: relative;
+    left: 18px;
+
+}
+.z{
+    width: 125px;
+}
+
+}
+
