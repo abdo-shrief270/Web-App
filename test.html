@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="test.css">
-    <title>te st</title>
+    <title>test</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -138,7 +138,7 @@
                 </div>
                 <div class="rpi">
                     <p>Rpi Command</p>
-                    <input type="text">
+                    <input id="rpicommand" type="text">
                 </div>
                 <button class="send">send</button>
             </div>
@@ -150,9 +150,9 @@
                     <p>altitude</p><div class="altitude"></div>
                 </div>
                 <div class="axes">
-                    <p class="">x</p><div class="x"></div>
-                    <p class="">y</p><div class="y"></div>
-                    <p class="">z</p><div class="z"></div>
+                    <p>x</p><div class="x"></div>
+                    <p>y</p><div class="y"></div>
+                    <p>z</p><div class="z"></div>
                 </div>
             </div>
         </div>
@@ -167,7 +167,15 @@
         read3=document.getElementById("read3");
         carro=document.getElementById("carro");
         last_active=document.getElementById("last-active");
-         const firebaseConfig = {
+        rpicommand=document.getElementById("rpicommand");
+        latitude=document.querySelector(".latitude");
+        Longitude=document.querySelector(".Longitude");
+        altitude=document.querySelector(".altitude");
+        x_x=document.querySelector(".x");
+        y_y=document.querySelector(".y");
+        z_z=document.querySelector(".z");
+        // import { getDatabase, ref, set } from "firebase/database";
+        const firebaseConfig = {
           apiKey: "AIzaSyCt3PpT9MV8TBlsgDmjvUngq-ZF1lNYQ2c",
           authDomain: "rpi-car-track.firebaseapp.com",
           databaseURL: "https://rpi-car-track-default-rtdb.firebaseio.com",
@@ -321,7 +329,43 @@
             if (data) {
                 arduino_echo.innerText = data;  
             } 
-            
+        });
+        ////////////////////rpicommand
+        let x="hoss"
+        function sendDataToRealtimeDB() {
+            firebase.set(firebase.ref(db, 'rpi_command'),x)
+            .then(() => {
+                console.log("Data saved successfully!");
+            })
+            .catch((error) => {
+                console.error("Error saving data: ", error);
+            });
+        }
+        // Call the function
+        sendDataToRealtimeDB();
+        //////////latitude
+        const latitude_location = firebase.database().ref('arduino_echo');
+        latitude_location.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                latitude.innerText = data;  
+            } 
+        });
+        //////////Longitude
+        const Longitude_location = firebase.database().ref('arduino_echo');
+        Longitude_location.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                Longitude.innerText = data;  
+            } 
+        });
+         //////////altitude
+         const altitude_location = firebase.database().ref('arduino_echo');
+         altitude_location.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                altitude.innerText = data;  
+            } 
         });
     </script>
 </body>
