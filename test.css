@@ -335,10 +335,14 @@ transform: translate(0,0);
     gap: 30px;
     align-items: center;
 }
-.latitude , .Longitude , .altitude{
+#latitude , #Longitude , #altitude{
     width: 180px;
     height: 40px;
-    border: 2px solid #007BFF;
+    border: 4px solid #1dcb457b;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .axes{
@@ -350,21 +354,36 @@ transform: translate(0,0);
 .x{
     width: 180px;
     height: 40px;
-    border: 2px solid #007BFF;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
     left: 17px;
+    border: 4px solid #007BFF;
+    border-radius: 10px;
 }
 .y{
     width: 180px;
     height: 40px;
     position: relative;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     left: 18px;
-    border: 2px solid #007BFF;
+    border: 4px solid #007BFF;
+    border-radius: 10px;
 }
 .z{
     width: 180px;
     height: 40px;
-    border: 2px solid #007BFF;
+    border: 4px solid #007BFF;
+    border-radius: 10px;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .hide{
     display: none;
@@ -509,10 +528,8 @@ transform: translate(0,0);
     align-items: center;
     font-size: 13px;
 }
-.latitude , .Longitude , .altitude{
+#latitude , #Longitude , #altitude{
     width: 125px;
-    height: 40px;
-    border: 2px solid #007BFF;
 }
 .axes{
     display: flex;
@@ -673,10 +690,8 @@ transform: translate(0,0);
        flex-direction: column;
        font-size: 13px;
    }
-   .latitude , .Longitude , .altitude{
+   #latitude , #Longitude , #altitude{
        width: 420px;
-       height: 40px;
-       border: 2px solid #007BFF;
    }
    .axes{
        display: flex;

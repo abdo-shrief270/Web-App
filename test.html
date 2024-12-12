@@ -140,14 +140,14 @@
                     <p>Rpi Command</p>
                     <input id="rpicommand" type="text">
                 </div>
-                <button class="send">send</button>
+                <button id="send_btn" class="send">send</button>
             </div>
             <div class="location-data">
                 <p>Last Location Data</p>
                 <div class="co-ordinates">
-                    <p>latitude</p><div class="latitude"></div>
-                    <p>Longitude</p><div class="Longitude"></div>
-                    <p>altitude</p><div class="altitude"></div>
+                    <p>latitude</p><div id="latitude"></div>
+                    <p>Longitude</p><div id="Longitude"></div>
+                    <p>altitude</p><div id="altitude"></div>
                 </div>
                 <div class="axes">
                     <p>x</p><div class="x"></div>
@@ -168,12 +168,14 @@
         carro=document.getElementById("carro");
         last_active=document.getElementById("last-active");
         rpicommand=document.getElementById("rpicommand");
-        latitude=document.querySelector(".latitude");
-        Longitude=document.querySelector(".Longitude");
-        altitude=document.querySelector(".altitude");
+        input_latitude=document.querySelector("#latitude");
+        input_longitude=document.querySelector("#Longitude");
+        input_altitude=document.querySelector("#altitude");
         x_x=document.querySelector(".x");
         y_y=document.querySelector(".y");
         z_z=document.querySelector(".z");
+        send_btn=document.querySelector("#send_btn");
+        arduino_echo=document.getElementById("arduino_echo");
         // import { getDatabase, ref, set } from "firebase/database";
         const firebaseConfig = {
           apiKey: "AIzaSyCt3PpT9MV8TBlsgDmjvUngq-ZF1lNYQ2c",
@@ -190,22 +192,25 @@
         const db = firebase.database();
 
          ///////logs-Status 
+        let stored_log_status="";
+        let stored_log_text="";
         const status_s = firebase.database().ref('log');
         status_s.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
                 const { status, text } = data;
-
+                stored_log_status = status;
+                stored_log_text = text;
                 logs_status.innerText = text;
                 if(status=="info"){
                     logs_status.style.color = "#000";
                     logs_status.style.backgroundColor = "#6EACDA";
                 }
-                if(status=="warning"){
+                else if(status=="warning"){
                     logs_status.style.backgroundColor = "#FFC107";
                     logs_status.style.color = "#000";
                 }
-                if(status=="error"){
+                else if(status=="error"){
                     logs_status.style.backgroundColor = "#DC3545";
                     logs_status.style.color = "#fff";
                 }
@@ -242,15 +247,26 @@
         function updateCarStatus(data) {
             const d = new Date();
             let time = d.getTime();
-            console.log(time / 1000 - data);
             let time_diff =Math.floor( time / 1000 - data);
 
             if (time_diff < 2) {
                 carro.innerText = "Car is Online";
                 carro.style.backgroundColor = "rgba(40, 167, 69, 0.1)";
                 carro.style.color = "#28AA45";
+                logs_status.innerText = stored_log_text;
+                if(stored_log_status=="info"){
+                    logs_status.style.color = "#000";
+                    logs_status.style.backgroundColor = "#6EACDA";
+                }
+                else if(stored_log_status=="warning"){
+                    logs_status.style.backgroundColor = "#FFC107";
+                    logs_status.style.color = "#000";
+                }
+                else if(stored_log_status=="error"){
+                    logs_status.style.backgroundColor = "#DC3545";
+                    logs_status.style.color = "#fff";
+                }
             } else {
-
                 carro.innerText = "Last Active from " + formatTimeAgo(time_diff);
                 carro.style.backgroundColor = "#DC35451A";
                 carro.style.color = "#DC3545";
@@ -327,46 +343,48 @@
         arduino.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                arduino_echo.innerText = data;  
+                arduino_echo.value = data;  
             } 
         });
-        ////////////////////rpicommand
-        let x="hoss"
-        function sendDataToRealtimeDB() {
-            firebase.set(firebase.ref(db, 'rpi_command'),x)
-            .then(() => {
-                console.log("Data saved successfully!");
-            })
-            .catch((error) => {
-                console.error("Error saving data: ", error);
-            });
+        ////////////////////rpicommand and send buton
+        send_btn.onclick=function(){
+            let command = rpicommand.value;
+            sendDataToRealtimeDB("rpi_command",command);
         }
-        // Call the function
-        sendDataToRealtimeDB();
-        //////////latitude
-        const latitude_location = firebase.database().ref('arduino_echo');
-        latitude_location.on('value', (snapshot) => {
+        //////////latitude-Longitude-altitude
+        
+        const geo_location = firebase.database().ref('location');
+        geo_location.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                latitude.innerText = data;  
+                const { altitude, latitude, longitude } = data;
+                input_altitude.innerText = altitude;
+                input_latitude.innerText = latitude;  
+                input_longitude.innerText = longitude; 
             } 
         });
-        //////////Longitude
-        const Longitude_location = firebase.database().ref('arduino_echo');
-        Longitude_location.on('value', (snapshot) => {
+        //////////x-y-z
+        const ecef_location = firebase.database().ref('locationEcef');
+         ecef_location.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                Longitude.innerText = data;  
+                const { x, y, z } = data;
+                x_x.innerText = Math.floor(x); 
+                y_y.innerText = Math.floor(y);  
+                z_z.innerText = Math.floor(z);   
             } 
         });
-         //////////altitude
-         const altitude_location = firebase.database().ref('arduino_echo');
-         altitude_location.on('value', (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-                altitude.innerText = data;  
-            } 
-        });
+
+        function sendDataToRealtimeDB(refrence,data,type="set") {
+            const Ref = firebase.database().ref(refrence);
+            if(type == "set"){
+                Ref.set(data)
+            }else if(type == "push"){
+                Ref.push(data)
+            }else if(type == "update"){
+                Ref.update(data)
+            }
+        }
     </script>
 </body>
 </html>
