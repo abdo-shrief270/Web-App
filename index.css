@@ -377,15 +377,15 @@ transform: translate(0,0);
 
     }
     #more{
-        width:300px;
+        width:270px;
     }
     #live{
-        width: 60px;
+        width: 50px;
     }
     #square{
         position: absolute;
         top: 50%;
-        right:20%;
+        right:15%;
         cursor: pointer;
     }
     #squaree{

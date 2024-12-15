@@ -240,6 +240,7 @@ body{
     align-items: center;
     font-weight: bold;
     border-radius: 10px;
+    text-align: center;
     padding: 5px;
     width: 100%;
 }
@@ -450,7 +451,7 @@ body{
            width: 360px;
        }
        .ultra{
-           font-size: 25px;
+           font-size: 20px;
        }
        .reads{
            gap: 6px;
@@ -485,7 +486,7 @@ body{
            justify-content:center;
            align-items: center;
            gap: 6px;
-           font-size: 20px;
+           font-size: 18px;
        }
        .con{
            display:flex;
@@ -505,7 +506,7 @@ body{
        }
        .ss{
         position: relative;
-        left:-40px ;
+        left:-27px ;
     }
        
    .hardware{
@@ -528,6 +529,7 @@ body{
    .location-data{
         display: flex;
         gap: 15px;
+        font-size: 18px;
    
    }
    .co-ordinates{

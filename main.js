@@ -45,9 +45,9 @@ else{
         nn.style.fontWeight='bold';
         nn.style.fontSize='16px';
         nn.style.transition='1s';
-        more.style.width='60px';
+        more.style.width='50px';
         more.style.transition='1s'; 
-        live.style.width='300px';
+        live.style.width='270px';
         live.style.transition='1s';
         circle.style.width='12px';
         circle.style.height='12px';
@@ -61,9 +61,9 @@ else{
         nn.style.fontSize='6px';
         nn.style.fontWeight='bold';
         nn.style.transition='1s';
-        more.style.width='300px';
+        more.style.width='270px';
         more.style.transition='1s';
-        live.style.width='60px';
+        live.style.width='50px';
         live.style.transition='1s';
         circle.style.width='6px';
         circle.style.height='6px';
