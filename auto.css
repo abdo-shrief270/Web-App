@@ -370,7 +370,7 @@ input{
         background-color:#fff ;
         border: 1px solid #007BFF;
         width: 200px;
-        height: 100%;
+        height:-webkit-fill-available;
         position: absolute;
         right: 0px;
         top: 0;
