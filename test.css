@@ -409,7 +409,7 @@ body{
         background-color:#fff ;
         border: 1px solid #007BFF;
         width: 200px;
-        height: 210vh;
+        height: 100%;
         position: absolute;
         right: 0px;
         top: 0;
@@ -447,7 +447,7 @@ body{
            align-items: center;
        }
        #live{
-           width: 400px;
+           width: 360px;
        }
        .ultra{
            font-size: 25px;
@@ -456,21 +456,21 @@ body{
            gap: 6px;
        }
        .left-ultra{
-           width: 130px;
+           width: 115px;
            font-size: 15px;
        }
        .left-ultra .from-back{
            font-size: 15px;
        }
        .front-ultra{
-           width: 130px;
+           width: 115px;
            font-size: 15px;
        }
        .front-ultra .from-back{
            font-size: 15px;
        }
        .right-ultra{
-           width: 130px;
+           width: 115px;
            font-size: 15px;
        }
        .right-ultra .from-back{
@@ -494,7 +494,7 @@ body{
            gap: 6px;
        }
        .square{
-           width:120px;
+           width:100px;
            height: 77px;
        }
        .up{
@@ -523,7 +523,7 @@ body{
        gap: 10px;
    }
    .arduino input,.rpi input{
-       width: 420px;
+       width: 340px;
    }
    .location-data{
         display: flex;
@@ -539,8 +539,8 @@ body{
        font-size: 13px;
    }
    #latitude , #Longitude , #altitude{
-       width: 420px;
-   }
+    width: 340px;
+}
    .axes{
        display: flex;
        align-items: center;
@@ -549,20 +549,20 @@ body{
        gap: 12px;
    }
    .x{
-       width: 420px;
-       position: relative;
+    width: 340px;
+    position: relative;
        left: 0px;
 
    }
    .y{
-       width: 420px;
-       position: relative;
+    width: 340px;
+    position: relative;
        left: 0px;
    
    }
    .z{
-       width: 420px;
-   }
+    width: 340px;
+}
    
 }
 @media (min-width:601px) and (max-width:1024px){
@@ -595,7 +595,7 @@ body{
         background-color:#fff ;
         border: 1px solid #007BFF;
         width: 250px;
-        height: 135vh;
+        height: 100%;
         position: absolute;
         right: 0px;
         top: 0;
