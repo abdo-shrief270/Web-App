@@ -42,7 +42,9 @@
     text-decoration: none;
     color: black;
 }
-#sidebar-btn{
+
+#sidebar-btn {
+    border: none;
     display: none;
 }
 .btn-move{
@@ -50,21 +52,6 @@
     transition: 0.5s;
 }
 .sidebar{
-    background-color:#fff ;
-    border: 1px solid #007BFF;
-    width: 250px;
-    height: 135vh;
-    position: absolute;
-    right: 0;
-    top: 0;
-    z-index: 1;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: column;
-    gap: 30px;
-    transform: translate(255px,0);
-    transition: 0.5s;
     display: none;
 }
 
@@ -334,7 +321,10 @@ input{
     border: none;
     color: #fff;
 }
-
+.hide{
+    display: none;
+    transition: 0.5s;
+}
 
 
 
@@ -351,9 +341,55 @@ input{
     .logo svg{
         width: 45px;
     }
+    .nav-bar{
+        flex-direction: row;
+        justify-content: space-between;
+    }
     .list{
-        font-size: 11px;
-        gap: 32px;
+        display: none;
+    }
+    #sidebar-btn{
+     background-color: #fff;
+     color: #007BFF;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     width: 35px;
+     height: 35px;
+     font-size: 25px;
+     border-radius: 5px;
+     position: relative;
+     right: 0px;
+     transition: 0.5s;
+    }
+    .btn-move{
+        transform: translate(-155px,0);
+        transition: 0.5s;
+    }
+    .sidebar{
+        background-color:#fff ;
+        border: 1px solid #007BFF;
+        width: 200px;
+        height: 210vh;
+        position: absolute;
+        right: 0px;
+        top: 0;
+        z-index: 1500;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        gap: 30px;
+        transition: 0.5s;
+        transform: translate(250px,0);
+    }
+    .hide{
+        display: none;
+        transition: 0.5s;
+    }
+    .side-move{
+        transform: translate(25px,0);
+        transition: 1s;
     }
 
     .container{
@@ -535,11 +571,33 @@ input{
         font-size: 25px;
         border-radius: 5px;
         position: relative;
-        right: 10px;
+        right: 0px;
         transition: 0.5s;
     }
     .sidebar{
-        display:flex;
+        background-color:#fff ;
+        border: 1px solid #007BFF;
+        width: 250px;
+        height: 135vh;
+        position: absolute;
+        right: 0px;
+        top: 0;
+        z-index: 1500;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        gap: 30px;
+        transition: 0.5s;
+        transform: translate(250px,0);
+    }
+    .hide{
+        display: none;
+        transition: 0.5s;
+    }
+    .side-move{
+        transform: translate(25px,0);
+        transition: 1s;
     }
     .container{
         flex-direction: row;

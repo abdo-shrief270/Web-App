@@ -171,17 +171,18 @@
             let sidebar = document.querySelector(".sidebar");
             let xbar = document.getElementById("xbar");
             let xmark = document.getElementById("xmark");
+            sidebar.classList.add("hide");
             angle=document.getElementById("angle");
             distance=document.getElementById("distance");
             speedoo=document.getElementById("speedoo");
-
             xmark.classList.remove("fa-circle-xmark");
             sidebarbtn.onclick = function (){
-              sidebar.classList.toggle("side-move");
-              sidebarbtn.classList.toggle("btn-move");
-              xmark.classList.toggle("fa-circle-xmark");
-              xbar.classList.toggle("fa-bars");
-              sidebarbtn.style.border="0px";
+                sidebar.classList.toggle("side-move");
+                sidebarbtn.classList.toggle("btn-move");
+                xmark.classList.toggle("fa-circle-xmark");
+                xbar.classList.toggle("fa-bars");
+                sidebar.classList.toggle("hide");
+                sidebarbtn.style.border="0px";
             };
     logs_status=document.getElementById("logs_status");
      const firebaseConfig = {
@@ -278,7 +279,7 @@
                 speedoo.innerText = Math.floor(data);  
             }
         });
-</script>
-            </script>
+        </script>
+        </script>
     </body>
 </html>
