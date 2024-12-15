@@ -334,10 +334,11 @@ transform: translate(0,0);
         align-items: center;
     }
     .con{
+        justify-content: center;
         flex-direction: column;
         display: flex;
         gap: 64px;
-        
+        align-items: center;
     }
     .left{
         gap: 12px;
