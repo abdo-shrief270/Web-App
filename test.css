@@ -13,7 +13,7 @@ body{
     gap: 10px;
     font-size: 16px;
     font-weight: 600;
-    padding: 12px;  
+    height: 50px;
     width: 100%;
 }
 .nav-bar{
@@ -402,7 +402,7 @@ body{
         transition: 0.5s;
     }
     .btn-move{
-        transform: translate(-145px,0);
+        transform: translate(-170px, 0);
         transition: 0.5s;
     }
     .sidebar{
@@ -427,7 +427,7 @@ body{
         transition: 0.5s;
     }
     .side-move{
-        transform: translate(25px,0);
+        transform: translate(0px,0px);
         transition: 1s;
     }
        .container{
@@ -435,7 +435,6 @@ body{
            display: flex;
            flex-direction: column;
            gap: 0px;
-           transform: translate(10px,0);
        }
        .left{
            display: flex;
@@ -614,7 +613,7 @@ body{
         transition: 0.5s;
     }
     .side-move{
-        transform: translate(25px,0);
+        transform: translate(0px,0px);
         transition: 1s;
     }
     .container{
