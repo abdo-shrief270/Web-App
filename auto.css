@@ -399,7 +399,6 @@ input{
         margin-top: 20px;
         justify-content: center;
         align-items: center;
-        /* background-color: #F8F8F8; */
     }
     .left{
         flex-direction: column;
