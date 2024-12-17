@@ -64,7 +64,7 @@
                         <div id="circle"></div>
                         <p class="word2" id="nn">Live</p>
                     </div>
-                    <iframe id="live" src="" ></iframe>
+                    <img id="live" src="" alt="Live Stream" />
                     <svg id="square" width="41" height="33" viewBox="0 0 41 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="0.5" y="0.5" width="40" height="32" rx="10" fill="black" fill-opacity="0.6"/>
                         <path d="M16.5 7.5H13.5C12.9696 7.5 12.4609 7.71071 12.0858 8.08579C11.7107 8.46086 11.5 8.96957 11.5 9.5V12.5M29.5 12.5V9.5C29.5 8.96957 29.2893 8.46086 28.9142 8.08579C28.5391 7.71071 28.0304 7.5 27.5 7.5H24.5M11.5 20.5V23.5C11.5 24.0304 11.7107 24.5391 12.0858 24.9142C12.4609 25.2893 12.9696 25.5 13.5 25.5H16.5M24.5 25.5H27.5C28.0304 25.5 28.5391 25.2893 28.9142 24.9142C29.2893 24.5391 29.5 24.0304 29.5 23.5V20.5" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -317,7 +317,26 @@ const batterypercentage = firebase.database().ref('batt_per');
                 }
             }
         });
+        const socket = new WebSocket('ws://car.local:8765');  // Replace with the actual IP of your RPI
 
+        socket.onmessage = function(event) {
+            const base64Image = event.data;  // Receive the base64-encoded image from the server
+
+            // Update the src of the image tag to show the received frame
+            document.getElementById('live').src = 'data:image/jpeg;base64,' + base64Image;
+        };
+
+        socket.onerror = function(error) {
+            console.log("WebSocket Error: " + error);
+        };
+
+        socket.onopen = function(event) {
+            console.log("Connected to WebSocket server");
+        };
+
+        socket.onclose = function(event) {
+            console.log("Disconnected from WebSocket server");
+        };
       </script>
 
 </body>

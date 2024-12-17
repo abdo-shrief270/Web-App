@@ -10,6 +10,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #live {
+            width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
     <div id="logs_status">
@@ -54,7 +60,7 @@
                     <div id="circle"></div>
                     <p class="word2" id="nn">Live Stream</p>
                 </div>
-                <iframe id="live" src="" ></iframe>
+                <img id="live" src="" alt="Live Stream" />
             </div>
             <div class="ultrasonic-reads">
                 <div class="ultra">
@@ -388,6 +394,26 @@
                 Ref.update(data)
             }
         }
+        const socket = new WebSocket('ws://car.local:8765');  // Replace with the actual IP of your RPI
+
+        socket.onmessage = function(event) {
+            const base64Image = event.data;  // Receive the base64-encoded image from the server
+
+            // Update the src of the image tag to show the received frame
+            document.getElementById('live').src = 'data:image/jpeg;base64,' + base64Image;
+        };
+
+        socket.onerror = function(error) {
+            console.log("WebSocket Error: " + error);
+        };
+
+        socket.onopen = function(event) {
+            console.log("Connected to WebSocket server");
+        };
+
+        socket.onclose = function(event) {
+            console.log("Disconnected from WebSocket server");
+        };
     </script>
 </body>
 </html>
